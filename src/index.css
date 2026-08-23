@@ -550,10 +550,15 @@ a {
 }
 
 .card-item__body {
-  padding: 16px 2px 0;
+  padding: 14px 16px 18px;
   display: flex;
   flex-direction: column;
   flex: 1;
+  /* 카드 전체 보더는 없지만, 이미지와 본문 사이 구분선 + 아주 옅은 배경 톤으로
+     카드 경계가 인지되게 (페이지 배경과 완전히 같은 색이 되지 않도록) */
+  border-top: 1px solid rgba(196, 146, 27, 0.08);
+  background: rgba(38, 57, 66, 0.09); /* --color-navy-light 9% */
+  border-radius: 0 0 8px 8px;
 }
 
 .card-item__date {
