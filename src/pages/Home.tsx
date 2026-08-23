@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import SummaryCard from "../components/SummaryCard";
 import CardItem from "../components/CardItem";
+import ImageFallbackIcon from "../components/ImageFallbackIcon";
+import type { CardSection } from "../types/card";
 import {
   getLatestSnapshot,
   getMoMReturnPct,
@@ -14,12 +16,7 @@ export default function Home() {
   const previous = getPreviousSnapshot();
   const momPct = latest ? getMoMReturnPct(latest, previous) : null;
 
-  const previews = [
-    { section: "Assets" as const, to: "/assets", card: undefined },
-    { section: "Insights" as const, to: "/insights", card: getLatestCard("insights") },
-    { section: "Career" as const, to: "/career", card: getLatestCard("career") },
-    { section: "Life" as const, to: "/life", card: getLatestCard("life") },
-  ];
+  const cardSections: CardSection[] = ["insights", "career", "life"];
 
   return (
     <div className="page">
@@ -50,20 +47,26 @@ export default function Home() {
       <section>
         <h2 className="section-title">최근 업데이트</h2>
         <div className="card-grid">
-          {previews.map((p) =>
-            p.card ? (
-              <CardItem key={p.section} card={p.card} />
-            ) : (
-              <Link key={p.section} to={p.to} className="card-item">
-                <div className="card-item__date">{p.section}</div>
-                <h3 className="card-item__title">자산 현황 보러 가기</h3>
-                <p className="card-item__summary">
-                  계좌별 잔액, 자산 추이, 위험자산 비중을 확인하세요.
-                </p>
-                <span className="card-item__link">Assets →</span>
-              </Link>
-            ),
-          )}
+          <Link to="/assets" className="card-item">
+            <div className="card-item__media">
+              <div className="card-item__media-fallback">
+                <ImageFallbackIcon />
+              </div>
+              <span className="card-item__badge">Assets</span>
+            </div>
+            <div className="card-item__body">
+              <div className="card-item__date">자산 현황</div>
+              <h3 className="card-item__title">자산 현황 보러 가기</h3>
+              <p className="card-item__summary">
+                계좌별 잔액, 자산 추이, 위험자산 비중을 확인하세요.
+              </p>
+              <span className="card-item__link">Assets →</span>
+            </div>
+          </Link>
+          {cardSections.map((section) => {
+            const card = getLatestCard(section);
+            return card ? <CardItem key={section} card={card} section={section} /> : null;
+          })}
         </div>
       </section>
     </div>

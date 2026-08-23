@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
 
 const navItems = [
   { to: "/", label: "Home", end: true },
@@ -9,6 +9,10 @@ const navItems = [
 ];
 
 export default function AppLayout() {
+  const location = useLocation();
+  // Assets만 화이트(라이트) 배경 예외 — 표/차트 가독성 우선
+  const isLight = location.pathname.startsWith("/assets");
+
   return (
     <div className="app-shell">
       <header className="app-header">
@@ -30,8 +34,10 @@ export default function AppLayout() {
           ))}
         </nav>
       </header>
-      <main className="app-content">
-        <Outlet />
+      <main className={isLight ? "app-content app-content--light" : "app-content"}>
+        <div className="app-content-inner">
+          <Outlet />
+        </div>
       </main>
       <footer className="app-footer">© {new Date().getFullYear()} Minsu Lee</footer>
     </div>

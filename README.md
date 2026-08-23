@@ -6,9 +6,16 @@
 - Stack: React + Vite + TypeScript + pnpm
 - Chart: recharts
 - Routing: react-router-dom (`HashRouter`)
-- 디자인 톤: Etihad Airways 참고 — 골드(#C4921B) 포인트 + 플럼블랙(#251019) +
-  아이보리(#FCFBF5) 배경, 제목은 Playfair Display, 본문은 Inter. 색상/폰트는
-  [src/index.css](src/index.css) 상단 `:root` 토큰만 바꾸면 전체 톤이 바뀝니다.
+- 디자인 톤: Etihad Airways 참고 — **다크가 기본, 화이트는 예외.** 기본 배경은
+  네이비 그라데이션(`--color-navy` #1b2a33 → `--color-navy-light` #263942),
+  기본 텍스트는 아이보리, 골드(`--color-gold` #C4921B)는 eyebrow/버튼/태그/
+  내비 active/카드 hover 보더에만 포인트로. 화이트 배경(`--color-ivory`)은
+  **Assets 페이지**와 **카드 상세 페이지의 본문 블록**(`.surface-light`)
+  두 곳에만 예외적으로 사용. 표면 색은 `--surface-bg`/`--surface-border`/
+  `--text-primary`/`--text-secondary` 토큰으로 간접 참조해서, `.app-content--light`
+  스코프 안에서만 라이트로 뒤집힙니다. 제목은 Fraunces, 카드뉴스 제목만
+  Playfair Display, 본문은 Inter. 색상/폰트는 [src/index.css](src/index.css)
+  상단 `:root` 토큰만 바꾸면 전체 톤이 바뀝니다.
 - 배포: GitHub Pages + GitHub Actions (`.github/workflows/deploy.yml`, `main` push 시 자동 배포)
 
 ## 개발
@@ -27,6 +34,8 @@ pnpm dev
 - **Career** (`/career`) — 인생 로드맵 타임라인, 졸업 D-day, 체크리스트,
   연구/커리어 카드뉴스
 - **Life** (`/life`) — 카드뉴스(여행/운동/기타)
+- **카드 상세** (`/insights/:id`, `/career/:id`, `/life/:id`) — 풀블리드 히어로
+  이미지(없으면 폴백 아이콘) + 화이트 본문 카드(마크다운) + 같은 태그 관련 카드 추천
 
 ## 데이터 구조
 
@@ -57,11 +66,28 @@ pnpm dev
 ### Insights / Career / Life — `src/data/cards/{insights|career|life}.json`
 
 ```jsonc
-{ "id": "...", "date": "YYYY-MM-DD", "title": "...", "tags": ["경제"], "summary": "...", "body": "...", "link": "..." }
+{
+  "id": "...",
+  "date": "YYYY-MM-DD",
+  "title": "...",
+  "tags": ["경제"],
+  "summary": "카드 목록용 한 줄 요약",
+  "image": "images/xxx.jpg", // 없으면 null → 폴백(다크 카드 + 흐린 아이콘) 적용
+  "body": "상세 페이지 본문. 마크다운 가능 (굵게, 목록 등)"
+}
 ```
 
-세 섹션 모두 `CardGrid` / `CardItem` / `TagFilter` 컴포넌트를 공유하고
-태그 체계만 섹션별로 다르게 갑니다.
+세 섹션 모두 `CardGrid` / `CardItem` / `CardDetail` / `TagFilter` 컴포넌트를
+공유하고 태그 체계만 섹션별로 다르게 갑니다. 카드를 클릭하면 `#/insights/:id`
+같은 전용 상세 페이지로 이동합니다.
+
+이미지는 `src/data/images/`에 파일을 넣고 JSON `image` 필드에
+`"images/파일명.jpg"`처럼 상대경로만 적으면 [src/lib/loadImages.ts](src/lib/loadImages.ts)가
+`import.meta.glob`으로 자동으로 찾아 연결합니다 (파일명만 일치하면 되므로
+정확한 폴더 depth는 신경 쓰지 않아도 됨). 지금은 `placeholder-finance.svg`,
+`placeholder-run.svg` 두 개만 데모용으로 들어가 있고, 나머지 카드는
+`image: null`로 폴백 스타일(카드 hover 시 골드 보더 + 흐린 아이콘)을 보여줍니다.
+저작권 있는 스톡 사진보다는 직접 찍은 사진 위주로 채우는 걸 추천합니다.
 
 ### Career 로드맵/체크리스트 — `src/data/careerConfig.ts`
 
@@ -91,5 +117,7 @@ pnpm dev
 
 ## 현재 상태
 
-5개 섹션 기본 틀 + 내비게이션 + 디자인 시스템 + Assets 실데이터(2026-05-24 기준)로
-구조를 잡은 초안. Insights/Career/Life는 더미 카드 1~2개로 레이아웃만 확인.
+5개 섹션 + 카드 상세 페이지 + 다크 기본/화이트 예외 디자인 시스템 +
+Assets 실데이터(2026-05-24 기준)로 구조를 잡은 초안. Insights/Career/Life는
+더미 카드 1~2개(이미지 있는 것/없는 것 섞어서)로 레이아웃만 확인.
+모바일 화면에서 카드 그리드/상세 페이지 깨짐 여부는 아직 실기기 확인 전.

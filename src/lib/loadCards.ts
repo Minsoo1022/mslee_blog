@@ -27,3 +27,14 @@ export function getAllTags(section: CardSection): string[] {
 export function getLatestCard(section: CardSection): Card | undefined {
   return getCards(section)[0];
 }
+
+export function getCardById(section: CardSection, id: string): Card | undefined {
+  return sections[section].find((c) => c.id === id);
+}
+
+/** 같은 태그를 하나 이상 공유하는 다른 카드 최대 n개 (최신순) */
+export function getRelatedCards(section: CardSection, current: Card, limit = 3): Card[] {
+  return getCards(section)
+    .filter((c) => c.id !== current.id && c.tags.some((t) => current.tags.includes(t)))
+    .slice(0, limit);
+}

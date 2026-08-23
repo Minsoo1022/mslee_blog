@@ -27,7 +27,7 @@ export default function Life() {
       </div>
 
       <TagFilter tags={allTags} selected={selected} onToggle={toggle} />
-      <CardGrid cards={filtered} />
+      <CardGrid cards={filtered} section="life" />
     </div>
   );
 }

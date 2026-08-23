@@ -1,22 +1,32 @@
 :root {
   /* ── 디자인 토큰 (Etihad 느낌 참고) ───────────────────── */
   --color-gold: #c4921b;
-  /* Etihad 실제 사이트는 와인빛 블랙이 아니라 짙은 네이비/차콜 톤이라 그에 맞춰 조정 */
   --color-navy: #1b2a33;
   --color-navy-light: #263942; /* 네이비 배경 위에 얹는 카드/구획용 */
   --color-ivory: #fcfbf5;
-  --color-text: #1c1c1a;
-  --color-text-muted: #8a867a;
-  --color-text-on-navy-muted: #a9b6bc;
-  --color-border: #e4dcc8;
-  --color-border-on-navy: #3a4d56;
+  --color-text: #1c1c1a; /* 화이트 배경 위 본문 텍스트 */
+  --color-text-muted: #8a867a; /* 화이트 배경 위 보조 텍스트 */
+  --color-text-on-navy-muted: #a9b6bc; /* 네이비 배경 위 보조 텍스트 */
+  --color-border: #e4dcc8; /* 화이트 배경 위 보더 */
+  --color-border-on-navy: #3a4d56; /* 네이비 배경 위 보더 */
   --color-positive: #4a6f4d;
   --color-negative: #8a3324;
+  --color-positive-on-navy: #7fb583;
+  --color-negative-on-navy: #d98b73;
+
+  /* 표면(카드/패널) 토큰 — 기본값은 다크. .app-content--light 안에서만 라이트로 교체됨 */
+  --surface-bg: var(--color-navy-light);
+  --surface-border: var(--color-border-on-navy);
+  --text-primary: var(--color-ivory);
+  --text-secondary: var(--color-text-on-navy-muted);
+  --text-positive: var(--color-positive-on-navy);
+  --text-negative: var(--color-negative-on-navy);
 
   --font-heading: "Fraunces", "Noto Serif KR", Georgia, serif;
+  --font-card-heading: "Playfair Display", "Noto Serif KR", Georgia, serif;
   --font-body: "Inter", "Pretendard", "Apple SD Gothic Neo", sans-serif;
 
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 * {
@@ -31,8 +41,9 @@ body,
 
 body {
   margin: 0;
-  background: var(--color-ivory);
-  color: var(--color-text);
+  /* 다크가 기본 배경. 은은한 대각선 그라데이션 */
+  background: linear-gradient(135deg, var(--color-navy) 0%, var(--color-navy-light) 100%);
+  color: var(--color-ivory);
   font-family: var(--font-body);
 }
 
@@ -43,6 +54,7 @@ h3 {
   font-optical-sizing: auto;
   font-weight: 500;
   letter-spacing: 0;
+  color: var(--text-primary);
 }
 
 a {
@@ -61,7 +73,8 @@ a {
   align-items: center;
   justify-content: space-between;
   padding: 20px 40px;
-  background: var(--color-navy);
+  background: transparent;
+  border-bottom: 1px solid rgba(252, 251, 245, 0.08);
   position: sticky;
   top: 0;
   z-index: 10;
@@ -90,6 +103,27 @@ a {
   letter-spacing: 0.03em;
   border-bottom: 2px solid transparent;
   transition: color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+
+@media (max-width: 560px) {
+  .app-header {
+    padding: 14px 16px;
+  }
+
+  .brand {
+    font-size: 0.95rem;
+    letter-spacing: 0.1em;
+  }
+
+  .main-nav {
+    gap: 0;
+  }
+
+  .nav-link {
+    padding: 6px 7px;
+    font-size: 0.74rem;
+  }
 }
 
 .nav-link:hover {
@@ -104,23 +138,41 @@ a {
 .app-content {
   flex: 1;
   width: 100%;
+  background: transparent;
+  color: var(--text-primary);
+}
+
+.app-content-inner {
   max-width: 1080px;
   margin: 0 auto;
   padding: 40px 24px 72px;
+}
+
+/* Assets 페이지 전용 라이트 예외 — 표/차트 가독성 우선 */
+.app-content--light {
+  background: var(--color-ivory);
+  color: var(--color-text);
+  --surface-bg: #ffffff;
+  --surface-border: var(--color-border);
+  --text-primary: var(--color-text);
+  --text-secondary: var(--color-text-muted);
+  --text-positive: var(--color-positive);
+  --text-negative: var(--color-negative);
 }
 
 .app-footer {
   padding: 24px;
   text-align: center;
   font-size: 0.78rem;
-  color: var(--color-text-muted);
-  border-top: 1px solid var(--color-border);
+  color: var(--color-text-on-navy-muted);
+  border-top: 1px solid rgba(252, 251, 245, 0.08);
+  background: transparent;
 }
 
-/* ── 히어로 (Etihad 다크 히어로 참고) ─────────────────── */
+/* ── 히어로 ───────────────────────────────────────────── */
 .hero {
-  background: var(--color-navy);
-  padding: 56px 48px;
+  padding: 40px 0 32px;
+  border-bottom: 1px solid var(--color-border-on-navy);
   margin-bottom: 32px;
 }
 
@@ -157,13 +209,14 @@ a {
 
 .page-sub {
   margin: 0;
-  color: var(--color-text-muted);
+  color: var(--text-secondary);
   font-size: 0.9rem;
 }
 
 .section-title {
   font-size: 1.2rem;
   margin: 0 0 14px;
+  color: var(--text-primary);
 }
 
 /* ── 요약 카드 ────────────────────────────────────────── */
@@ -175,14 +228,14 @@ a {
 }
 
 .summary-card {
-  background: #fff;
-  border: 1px solid var(--color-border);
+  background: var(--surface-bg);
+  border: 1px solid var(--surface-border);
   padding: 20px;
 }
 
 .summary-card__label {
   font-size: 0.8rem;
-  color: var(--color-text-muted);
+  color: var(--text-secondary);
   margin-bottom: 10px;
   letter-spacing: 0.02em;
 }
@@ -191,26 +244,27 @@ a {
   font-family: var(--font-heading);
   font-size: 1.5rem;
   font-weight: 600;
+  color: var(--text-primary);
 }
 
 .summary-card__value--positive {
-  color: var(--color-positive);
+  color: var(--text-positive);
 }
 
 .summary-card__value--negative {
-  color: var(--color-negative);
+  color: var(--text-negative);
 }
 
 .summary-card__sub {
   margin-top: 8px;
   font-size: 0.78rem;
-  color: var(--color-text-muted);
+  color: var(--text-secondary);
 }
 
 /* ── 패널 ─────────────────────────────────────────────── */
 .panel {
-  background: #fff;
-  border: 1px solid var(--color-border);
+  background: var(--surface-bg);
+  border: 1px solid var(--surface-border);
   padding: 24px;
   margin-bottom: 24px;
 }
@@ -230,7 +284,7 @@ a {
   margin-bottom: 0;
 }
 
-/* ── 테이블 ───────────────────────────────────────────── */
+/* ── 테이블 (Assets 전용, 라이트) ─────────────────────── */
 .table-wrap {
   overflow-x: auto;
 }
@@ -239,25 +293,26 @@ a {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.88rem;
+  color: var(--text-primary);
 }
 
 .data-table th,
 .data-table td {
   padding: 11px 8px;
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--surface-border);
   text-align: left;
   white-space: nowrap;
 }
 
 .data-table thead th {
-  color: var(--color-text-muted);
+  color: var(--text-secondary);
   font-weight: 500;
   font-size: 0.78rem;
   letter-spacing: 0.03em;
 }
 
 .data-table tfoot td {
-  border-top: 1px solid var(--color-navy);
+  border-top: 1px solid var(--text-primary);
   border-bottom: none;
 }
 
@@ -266,24 +321,24 @@ a {
 }
 
 .cell-muted {
-  color: var(--color-text-muted);
+  color: var(--text-secondary);
   white-space: normal;
 }
 
 .text-positive {
-  color: var(--color-positive);
+  color: var(--text-positive);
 }
 
 .text-negative {
-  color: var(--color-negative);
+  color: var(--text-negative);
 }
 
 .empty-state {
   padding: 48px 0;
-  color: var(--color-text-muted);
+  color: var(--text-secondary);
 }
 
-/* ── 카드뉴스 (Insights/Career/Life 공유) ─────────────── */
+/* ── 카드뉴스 (Insights/Career/Life/Home 미리보기 공유, 항상 다크) ── */
 .card-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -304,25 +359,74 @@ a {
 }
 
 .card-item {
-  display: block;
-  background: #fff;
-  border: 1px solid var(--color-border);
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-navy-light);
+  border: 1px solid var(--color-border-on-navy);
   text-decoration: none;
   color: inherit;
+  transition: border-color 0.15s;
+}
+
+.card-item:hover {
+  border-color: var(--color-gold);
+}
+
+.card-item__media {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--color-navy);
+}
+
+.card-item__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.card-item__media-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(252, 251, 245, 0.28);
+}
+
+.card-item__badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: var(--color-gold);
+  color: var(--color-navy);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  letter-spacing: 0.02em;
+}
+
+.card-item__body {
+  padding: 18px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .card-item__date {
   font-size: 0.75rem;
-  color: var(--color-text-muted);
+  color: var(--color-text-on-navy-muted);
   margin-bottom: 8px;
 }
 
 .card-item__title {
-  font-family: var(--font-heading);
-  font-size: 1.08rem;
+  font-family: var(--font-card-heading);
+  font-weight: 600;
+  font-size: 1.1rem;
   margin: 0 0 10px;
   line-height: 1.35;
+  color: var(--color-ivory);
 }
 
 .card-item__tags {
@@ -344,12 +448,14 @@ a {
   margin: 0;
   font-size: 0.88rem;
   line-height: 1.55;
-  color: var(--color-text);
+  color: rgba(252, 251, 245, 0.82);
+  flex: 1;
 }
 
 .card-item__link {
   display: inline-block;
-  margin-top: 12px;
+  align-self: flex-end;
+  margin-top: 14px;
   font-size: 0.82rem;
   color: var(--color-gold);
   font-weight: 600;
@@ -366,19 +472,115 @@ a {
   font-family: var(--font-body);
   font-size: 0.82rem;
   padding: 6px 14px;
-  background: #fff;
-  border: 1px solid var(--color-border);
-  color: var(--color-text-muted);
+  background: var(--color-navy-light);
+  border: 1px solid var(--color-border-on-navy);
+  color: var(--color-text-on-navy-muted);
   cursor: pointer;
 }
 
 .tag-filter__btn--active {
-  background: var(--color-navy);
-  border-color: var(--color-navy);
+  background: var(--color-gold);
+  border-color: var(--color-gold);
+  color: var(--color-navy);
+  font-weight: 600;
+}
+
+/* ── 카드 상세 페이지 ─────────────────────────────────── */
+.card-detail__hero {
+  position: relative;
+  aspect-ratio: 21 / 9;
+  margin: 0 0 24px;
+  overflow: hidden;
+}
+
+.card-detail__hero-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.card-detail__hero-media--fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-navy-light);
+  color: rgba(252, 251, 245, 0.25);
+}
+
+.card-detail__hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(27, 42, 51, 0) 40%, rgba(15, 22, 27, 0.88) 100%);
+}
+
+.card-detail__hero-text {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 28px 32px;
+}
+
+.card-detail__tags {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.card-detail__title {
+  font-family: var(--font-card-heading);
+  font-weight: 600;
+  font-size: 2rem;
+  margin: 0 0 8px;
   color: var(--color-ivory);
 }
 
-/* ── 위험자산 게이지 ──────────────────────────────────── */
+.card-detail__date {
+  font-size: 0.85rem;
+  color: rgba(252, 251, 245, 0.75);
+}
+
+.card-detail__body {
+  padding: 32px;
+  margin-bottom: 24px;
+  line-height: 1.75;
+  font-size: 0.95rem;
+}
+
+.card-detail__body p {
+  margin: 0 0 1em;
+}
+
+.card-detail__body ul,
+.card-detail__body ol {
+  margin: 0 0 1em;
+  padding-left: 1.4em;
+}
+
+.card-detail__body strong {
+  font-weight: 700;
+}
+
+.card-detail__footer {
+  margin-bottom: 40px;
+}
+
+.card-detail__back {
+  color: var(--color-gold);
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* 다크 배경 위에서 예외적으로 화이트 표면을 쓰는 곳 (카드 상세 본문 등) */
+.surface-light {
+  background: var(--color-ivory);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+/* ── 위험자산 게이지 (Assets 전용, 라이트) ────────────── */
 .risk-gauge {
   padding-top: 8px;
 }
@@ -436,18 +638,18 @@ a {
   background: rgba(74, 111, 77, 0.08);
 }
 
-/* ── 로드맵 ───────────────────────────────────────────── */
+/* ── 로드맵 (Career, 다크) ────────────────────────────── */
 .roadmap {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 0;
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid var(--surface-border);
 }
 
 .roadmap__stage {
   padding: 18px 16px;
-  border-right: 1px solid var(--color-border);
-  border-bottom: 1px solid var(--color-border);
+  border-right: 1px solid var(--surface-border);
+  border-bottom: 1px solid var(--surface-border);
 }
 
 .roadmap__stage:last-child {
@@ -465,16 +667,17 @@ a {
   font-family: var(--font-heading);
   font-size: 1.05rem;
   margin-bottom: 8px;
+  color: var(--text-primary);
 }
 
 .roadmap__desc {
   font-size: 0.85rem;
-  color: var(--color-text-muted);
+  color: var(--text-secondary);
   line-height: 1.5;
   margin: 0;
 }
 
-/* ── D-day ────────────────────────────────────────────── */
+/* ── D-day (Career, 다크) ─────────────────────────────── */
 .dday {
   display: flex;
   align-items: baseline;
@@ -485,15 +688,15 @@ a {
   font-family: var(--font-heading);
   font-size: 2.2rem;
   font-weight: 600;
-  color: var(--color-navy);
+  color: var(--color-gold);
 }
 
 .dday__sub {
   font-size: 0.82rem;
-  color: var(--color-text-muted);
+  color: var(--text-secondary);
 }
 
-/* ── 체크리스트 ───────────────────────────────────────── */
+/* ── 체크리스트 (Career, 다크) ────────────────────────── */
 .checklist {
   list-style: none;
   margin: 0;
@@ -508,6 +711,7 @@ a {
   align-items: center;
   gap: 12px;
   font-size: 0.92rem;
+  color: var(--text-primary);
 }
 
 .checklist__box {
@@ -523,6 +727,6 @@ a {
 }
 
 .checklist__item--done {
-  color: var(--color-text-muted);
+  color: var(--text-secondary);
   text-decoration: line-through;
 }

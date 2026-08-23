@@ -68,7 +68,7 @@ export default function Career() {
       <section>
         <h2 className="section-title">연구/커리어 기록</h2>
         <TagFilter tags={allTags} selected={selected} onToggle={toggle} />
-        <CardGrid cards={filtered} />
+        <CardGrid cards={filtered} section="career" />
       </section>
     </div>
   );
