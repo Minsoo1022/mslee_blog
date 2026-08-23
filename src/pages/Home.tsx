@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import SummaryCard from "../components/SummaryCard";
 import CardItem from "../components/CardItem";
-import ImageFallbackIcon from "../components/ImageFallbackIcon";
+import { IconChartBar } from "../components/icons";
 import type { CardSection } from "../types/card";
 import {
   getLatestSnapshot,
@@ -50,7 +50,7 @@ export default function Home() {
           <Link to="/assets" className="card-item">
             <div className="card-item__media">
               <div className="card-item__media-fallback">
-                <ImageFallbackIcon />
+                <IconChartBar className="card-item__media-fallback-icon" />
               </div>
               <span className="card-item__badge">Assets</span>
             </div>
@@ -60,7 +60,7 @@ export default function Home() {
               <p className="card-item__summary">
                 계좌별 잔액, 자산 추이, 위험자산 비중을 확인하세요.
               </p>
-              <span className="card-item__link">Assets →</span>
+              <span className="card-item__link">자세히 보기 →</span>
             </div>
           </Link>
           {cardSections.map((section) => {

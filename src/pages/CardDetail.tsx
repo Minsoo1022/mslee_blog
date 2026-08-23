@@ -4,7 +4,7 @@ import { getCardById, getRelatedCards } from "../lib/loadCards";
 import { resolveImage } from "../lib/loadImages";
 import { renderMarkdown } from "../lib/markdown";
 import { formatDateLabel } from "../lib/format";
-import ImageFallbackIcon from "../components/ImageFallbackIcon";
+import { pickIconForTags } from "../components/icons";
 import CardItem from "../components/CardItem";
 
 const sectionLabel: Record<CardSection, string> = {
@@ -27,6 +27,7 @@ export default function CardDetail({ section }: Props) {
 
   const imageUrl = resolveImage(card.image);
   const related = getRelatedCards(section, card);
+  const FallbackIcon = pickIconForTags(card.tags);
 
   return (
     <div className="page card-detail">
@@ -35,7 +36,7 @@ export default function CardDetail({ section }: Props) {
           <img src={imageUrl} alt="" className="card-detail__hero-media" />
         ) : (
           <div className="card-detail__hero-media card-detail__hero-media--fallback">
-            <ImageFallbackIcon />
+            <FallbackIcon className="card-detail__hero-media-fallback-icon" />
           </div>
         )}
         <div className="card-detail__hero-overlay" />

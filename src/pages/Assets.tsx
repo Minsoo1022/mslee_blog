@@ -55,7 +55,7 @@ export default function Assets() {
         />
       </div>
 
-      <section className="panel">
+      <section className="panel panel--table">
         <h2>계좌별 현황</h2>
         <AccountsTable accounts={latest.accounts} total={latest.totalAssets} />
       </section>

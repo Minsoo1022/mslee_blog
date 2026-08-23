@@ -14,8 +14,10 @@
   --color-positive-on-navy: #7fb583;
   --color-negative-on-navy: #d98b73;
 
-  /* 표면(카드/패널) 토큰 — 기본값은 다크. .app-content--light 안에서만 라이트로 교체됨 */
-  --surface-bg: var(--color-navy-light);
+  /* 표면(카드/패널) 토큰 — 기본값은 다크. .app-content--light 안에서만 라이트로 교체됨.
+     surface-fill: 아이콘/숫자 요약 카드의 배경 필채움 (보더 대신 이걸로 구분)
+     surface-border: 테이블 행 구분선 등 "선"이 꼭 필요한 곳에만 남겨둠 */
+  --surface-fill: var(--color-navy-light);
   --surface-border: var(--color-border-on-navy);
   --text-primary: var(--color-ivory);
   --text-secondary: var(--color-text-on-navy-muted);
@@ -41,8 +43,14 @@ body,
 
 body {
   margin: 0;
-  /* 다크가 기본 배경. 은은한 대각선 그라데이션 */
-  background: linear-gradient(135deg, var(--color-navy) 0%, var(--color-navy-light) 100%);
+  /* 다크가 기본 배경. 은은한 대각선 그라데이션 + 아주 옅은 골드 선 패턴 */
+  background-color: var(--color-navy);
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cg stroke='%23c4921b' stroke-opacity='0.06' stroke-width='1'%3E%3Cline x1='0' y1='60' x2='320' y2='10'/%3E%3Cline x1='30' y1='320' x2='230' y2='0'/%3E%3Cline x1='160' y1='0' x2='320' y2='210'/%3E%3Cline x1='0' y1='180' x2='140' y2='320'/%3E%3Cline x1='90' y1='0' x2='0' y2='120'/%3E%3C/g%3E%3C/svg%3E"),
+    linear-gradient(135deg, var(--color-navy) 0%, var(--color-navy-light) 100%);
+  background-repeat: repeat, no-repeat;
+  background-size: 320px 320px, cover;
+  background-attachment: fixed, fixed;
   color: var(--color-ivory);
   font-family: var(--font-body);
 }
@@ -152,7 +160,8 @@ a {
 .app-content--light {
   background: var(--color-ivory);
   color: var(--color-text);
-  --surface-bg: #ffffff;
+  /* 화이트 배경 위 필채움은 순백이 아니라 아이보리 위에 아주 옅은 네이비 톤 */
+  --surface-fill: rgba(27, 42, 51, 0.05);
   --surface-border: var(--color-border);
   --text-primary: var(--color-text);
   --text-secondary: var(--color-text-muted);
@@ -214,8 +223,10 @@ a {
 }
 
 .section-title {
-  font-size: 1.2rem;
-  margin: 0 0 14px;
+  font-family: var(--font-heading);
+  font-size: 1.9rem;
+  font-weight: 400;
+  margin: 0 0 20px;
   color: var(--text-primary);
 }
 
@@ -228,9 +239,9 @@ a {
 }
 
 .summary-card {
-  background: var(--surface-bg);
-  border: 1px solid var(--surface-border);
-  padding: 20px;
+  background: var(--surface-fill);
+  border-radius: 18px;
+  padding: 22px;
 }
 
 .summary-card__label {
@@ -263,15 +274,22 @@ a {
 
 /* ── 패널 ─────────────────────────────────────────────── */
 .panel {
-  background: var(--surface-bg);
-  border: 1px solid var(--surface-border);
-  padding: 24px;
+  background: var(--surface-fill);
+  border-radius: 18px;
+  padding: 26px;
   margin-bottom: 24px;
 }
 
 .panel h2 {
   margin: 0 0 16px;
   font-size: 1.15rem;
+}
+
+/* 계좌별 현황처럼 표/리스트가 기능의 중심인 곳: 박스 없이 행 구분선만 */
+.panel--table {
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
 }
 
 .panel-grid {
@@ -361,22 +379,17 @@ a {
 .card-item {
   display: flex;
   flex-direction: column;
-  background: var(--color-navy-light);
-  border: 1px solid var(--color-border-on-navy);
+  background: transparent;
   text-decoration: none;
   color: inherit;
-  transition: border-color 0.15s;
-}
-
-.card-item:hover {
-  border-color: var(--color-gold);
 }
 
 .card-item__media {
   position: relative;
   aspect-ratio: 16 / 9;
   overflow: hidden;
-  background: var(--color-navy);
+  background: var(--color-navy-light);
+  border-radius: 8px 8px 0 0;
 }
 
 .card-item__media img {
@@ -384,15 +397,26 @@ a {
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.25s ease;
+}
+
+.card-item:hover .card-item__media img {
+  transform: scale(1.03);
 }
 
 .card-item__media-fallback {
+  position: relative;
   width: 100%;
   height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: rgba(252, 251, 245, 0.28);
+}
+
+.card-item__media-fallback-icon {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  width: 28px;
+  height: 28px;
+  color: rgba(252, 251, 245, 0.3);
 }
 
 .card-item__badge {
@@ -408,7 +432,7 @@ a {
 }
 
 .card-item__body {
-  padding: 18px 20px 20px;
+  padding: 16px 2px 0;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -454,11 +478,19 @@ a {
 
 .card-item__link {
   display: inline-block;
-  align-self: flex-end;
+  align-self: flex-start;
   margin-top: 14px;
   font-size: 0.82rem;
   color: var(--color-gold);
   font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: text-decoration-thickness 0.15s;
+}
+
+.card-item:hover .card-item__link {
+  text-decoration-thickness: 2px;
 }
 
 .tag-filter {
@@ -570,14 +602,21 @@ a {
   color: var(--color-gold);
   font-size: 0.88rem;
   font-weight: 600;
-  text-decoration: none;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: text-decoration-thickness 0.15s;
+}
+
+.card-detail__back:hover {
+  text-decoration-thickness: 2px;
 }
 
 /* 다크 배경 위에서 예외적으로 화이트 표면을 쓰는 곳 (카드 상세 본문 등) */
 .surface-light {
   background: var(--color-ivory);
   color: var(--color-text);
-  border: 1px solid var(--color-border);
+  border-radius: 12px;
 }
 
 /* ── 위험자산 게이지 (Assets 전용, 라이트) ────────────── */

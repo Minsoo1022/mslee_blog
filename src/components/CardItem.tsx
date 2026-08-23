@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import type { Card, CardSection } from "../types/card";
 import { formatDateLabel } from "../lib/format";
 import { resolveImage } from "../lib/loadImages";
-import ImageFallbackIcon from "./ImageFallbackIcon";
+import { pickIconForTags } from "./icons";
 
 interface Props {
   card: Card;
@@ -12,6 +12,7 @@ interface Props {
 export default function CardItem({ card, section }: Props) {
   const imageUrl = resolveImage(card.image);
   const primaryTag = card.tags[0];
+  const FallbackIcon = pickIconForTags(card.tags);
 
   return (
     <Link to={`/${section}/${card.id}`} className="card-item">
@@ -20,7 +21,7 @@ export default function CardItem({ card, section }: Props) {
           <img src={imageUrl} alt="" loading="lazy" />
         ) : (
           <div className="card-item__media-fallback">
-            <ImageFallbackIcon />
+            <FallbackIcon className="card-item__media-fallback-icon" />
           </div>
         )}
         {primaryTag && <span className="card-item__badge">{primaryTag}</span>}
