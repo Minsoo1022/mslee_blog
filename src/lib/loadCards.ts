@@ -1,6 +1,6 @@
 import type { Card, CardSection } from "../types/card";
 import insights from "../data/cards/insights.json";
-import career from "../data/cards/career.json";
+import career from "../data/career/job-prep.json";
 import life from "../data/cards/life.json";
 
 const sections: Record<CardSection, Card[]> = {

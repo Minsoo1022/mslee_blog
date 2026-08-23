@@ -5,24 +5,27 @@ import { resolveImage } from "../lib/loadImages";
 import { renderMarkdown } from "../lib/markdown";
 import { formatDateLabel } from "../lib/format";
 import { pickIconForTags } from "../components/icons";
-import CardItem from "../components/CardItem";
+import CardGrid from "../components/CardGrid";
 
 const sectionLabel: Record<CardSection, string> = {
   insights: "Insights",
-  career: "Career",
+  career: "취업 준비",
   life: "Life",
 };
 
 interface Props {
   section: CardSection;
+  /** 라우트 prefix가 section과 다를 때(예: career job-prep) 지정. 기본값은 section */
+  basePath?: string;
 }
 
-export default function CardDetail({ section }: Props) {
+export default function CardDetail({ section, basePath }: Props) {
   const { id } = useParams<{ id: string }>();
   const card = id ? getCardById(section, id) : undefined;
+  const listPath = `/${basePath ?? section}`;
 
   if (!card) {
-    return <Navigate to={`/${section}`} replace />;
+    return <Navigate to={listPath} replace />;
   }
 
   const imageUrl = resolveImage(card.image);
@@ -59,7 +62,7 @@ export default function CardDetail({ section }: Props) {
       />
 
       <div className="card-detail__footer">
-        <Link to={`/${section}`} className="card-detail__back">
+        <Link to={listPath} className="card-detail__back">
           ← {sectionLabel[section]} 목록으로
         </Link>
       </div>
@@ -67,11 +70,7 @@ export default function CardDetail({ section }: Props) {
       {related.length > 0 && (
         <section>
           <h2 className="section-title">관련 카드</h2>
-          <div className="card-grid">
-            {related.map((r) => (
-              <CardItem key={r.id} card={r} section={section} />
-            ))}
-          </div>
+          <CardGrid cards={related} section={section} basePath={basePath} />
         </section>
       )}
     </div>

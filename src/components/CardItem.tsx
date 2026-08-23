@@ -7,15 +7,17 @@ import { pickIconForTags } from "./icons";
 interface Props {
   card: Card;
   section: CardSection;
+  /** 라우트 prefix가 section과 다를 때(예: career job-prep) 지정. 기본값은 section */
+  basePath?: string;
 }
 
-export default function CardItem({ card, section }: Props) {
+export default function CardItem({ card, section, basePath }: Props) {
   const imageUrl = resolveImage(card.image);
   const primaryTag = card.tags[0];
   const FallbackIcon = pickIconForTags(card.tags);
 
   return (
-    <Link to={`/${section}/${card.id}`} className="card-item">
+    <Link to={`/${basePath ?? section}/${card.id}`} className="card-item">
       <div className="card-item__media">
         {imageUrl ? (
           <img src={imageUrl} alt="" loading="lazy" />

@@ -1,11 +1,10 @@
 import { useMemo, useState } from "react";
-import CardGrid from "../components/CardGrid";
-import TagFilter from "../components/TagFilter";
-import { getAllTags, getCards } from "../lib/loadCards";
-import { careerChecklist, graduationDate, roadmapStages } from "../data/careerConfig";
-import { daysUntil } from "../lib/format";
+import CardGrid from "../../components/CardGrid";
+import TagFilter from "../../components/TagFilter";
+import { getAllTags, getCards } from "../../lib/loadCards";
+import { careerChecklist, roadmapStages } from "../../data/careerConfig";
 
-export default function Career() {
+export default function JobPrep() {
   const allCards = getCards("career");
   const allTags = getAllTags("career");
   const [selected, setSelected] = useState<string[]>([]);
@@ -21,13 +20,11 @@ export default function Career() {
     return allCards.filter((c) => c.tags.some((t) => selected.includes(t)));
   }, [allCards, selected]);
 
-  const dDay = daysUntil(graduationDate);
-
   return (
     <div className="page">
       <div className="page-header">
-        <h1>Career</h1>
-        <p className="page-sub">인생 로드맵과 KIST 대학원 생활 기록</p>
+        <h1>취업 준비</h1>
+        <p className="page-sub">인생 로드맵, 체크리스트, 영어/자격증 준비 기록</p>
       </div>
 
       <section className="panel">
@@ -44,16 +41,6 @@ export default function Career() {
       </section>
 
       <section className="panel">
-        <h2>졸업까지 D-day</h2>
-        <div className="dday">
-          <span className="dday__value">
-            {dDay >= 0 ? `D-${dDay}` : `D+${-dDay}`}
-          </span>
-          <span className="dday__sub">목표일 {graduationDate} (임시값 — 확정 시 수정)</span>
-        </div>
-      </section>
-
-      <section className="panel">
         <h2>영어/자격증 체크리스트</h2>
         <ul className="checklist">
           {careerChecklist.map((item) => (
@@ -66,9 +53,9 @@ export default function Career() {
       </section>
 
       <section>
-        <h2 className="section-title">연구/커리어 기록</h2>
+        <h2 className="section-title">취업 준비 기록</h2>
         <TagFilter tags={allTags} selected={selected} onToggle={toggle} />
-        <CardGrid cards={filtered} section="career" />
+        <CardGrid cards={filtered} section="career" basePath="career/job-prep" />
       </section>
     </div>
   );

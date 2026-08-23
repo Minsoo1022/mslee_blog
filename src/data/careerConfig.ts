@@ -1,7 +1,9 @@
-// Career 페이지의 로드맵/D-day 설정.
-// ⚠️ graduationDate는 실제 졸업 목표일을 몰라서 임시값을 넣어뒀습니다.
-// 확정되면 이 값만 바꾸면 됩니다.
-export const graduationDate = "2029-02-28"; // TODO: 실제 졸업 목표일로 수정
+// Career/대학원 페이지의 로드맵/D-day 설정.
+// ⚠️ graduationDate는 "2028 졸업 예정"까지만 알아서 월/일은 임시값(2월 말)입니다.
+// 정확한 날짜가 정해지면 이 값만 바꾸면 됩니다.
+export const graduationDate = "2028-02-29"; // TODO: 정확한 졸업(예정)일로 수정
+export const admissionLabel = "2026.03 입학 · 2028 졸업 예정";
+export const researchFocus = "배터리 소재(LFP+GMS 도전재) 연구";
 
 export interface RoadmapStage {
   ageRange: string;
