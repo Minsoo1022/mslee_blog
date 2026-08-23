@@ -22,6 +22,23 @@ const navItems: NavItem[] = [
   { to: "/life", label: "Life" },
 ];
 
+function ChevronDown() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="nav-link__chevron"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="m6 9 6 6 6-6" />
+    </svg>
+  );
+}
+
 export default function AppLayout() {
   const location = useLocation();
   // Assets만 화이트(라이트) 배경 예외 — 표/차트 가독성 우선
@@ -43,7 +60,10 @@ export default function AppLayout() {
                     isActive ? "nav-link nav-link--active" : "nav-link"
                   }
                 >
-                  {item.label}
+                  <span className="nav-link__inner">
+                    {item.label}
+                    <ChevronDown />
+                  </span>
                 </NavLink>
                 <div className="nav-dropdown">
                   {item.dropdown.map((sub) => (
@@ -70,7 +90,7 @@ export default function AppLayout() {
                   isActive ? "nav-link nav-link--active" : "nav-link"
                 }
               >
-                {item.label}
+                <span className="nav-link__inner">{item.label}</span>
               </NavLink>
             ),
           )}

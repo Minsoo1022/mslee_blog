@@ -1,6 +1,7 @@
 :root {
   /* ── 디자인 토큰 (Etihad 느낌 참고) ───────────────────── */
   --color-gold: #c4921b;
+  --color-gold-deep: #a3760f; /* hover 시 진해지는 골드 (화살표 등) */
   --color-navy: #1b2a33;
   --color-navy-light: #263942; /* 네이비 배경 위에 얹는 카드/구획용 */
   --color-ivory: #fcfbf5;
@@ -103,15 +104,56 @@ a {
 }
 
 .nav-link {
+  position: relative;
+  display: block;
   padding: 8px 14px;
   text-decoration: none;
   color: rgba(252, 251, 245, 0.75);
   font-size: 0.88rem;
   font-weight: 500;
   letter-spacing: 0.03em;
-  border-bottom: 2px solid transparent;
-  transition: color 0.15s, border-color 0.15s;
+  transition: color 0.15s;
   white-space: nowrap;
+}
+
+/* 메뉴 라벨(+ Career의 화살표)을 모든 항목에서 동일한 flex 박스/line-height로 통일 */
+.nav-link__inner {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  line-height: 1;
+}
+
+.nav-link__chevron {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.nav-item--dropdown:hover .nav-link__chevron,
+.nav-item--dropdown:focus-within .nav-link__chevron {
+  transform: rotate(180deg);
+}
+
+/* 밑줄: 왼쪽에서 오른쪽으로 자라나는 hover 효과, active는 항상 꽉 찬 상태 */
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  bottom: 2px;
+  height: 2px;
+  width: 0;
+  background: var(--color-gold);
+  transition: width 0.2s ease;
+}
+
+.nav-link:hover::after {
+  width: calc(100% - 28px);
+}
+
+.nav-link--active::after {
+  width: calc(100% - 28px);
 }
 
 @media (max-width: 560px) {
@@ -130,7 +172,19 @@ a {
 
   .nav-link {
     padding: 6px 7px;
+  }
+
+  .nav-link__inner {
     font-size: 0.74rem;
+  }
+
+  .nav-link::after {
+    left: 7px;
+  }
+
+  .nav-link:hover::after,
+  .nav-link--active::after {
+    width: calc(100% - 14px);
   }
 }
 
@@ -140,7 +194,6 @@ a {
 
 .nav-link--active {
   color: var(--color-ivory);
-  border-bottom-color: var(--color-gold);
 }
 
 /* ── 드롭다운 내비 (Career) ───────────────────────────── */
@@ -161,15 +214,21 @@ a {
   border-radius: 10px;
   padding: 8px;
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
-  display: none;
+  display: flex;
   flex-direction: column;
   gap: 2px;
   z-index: 20;
+  opacity: 0;
+  transform: translateY(-4px);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .nav-item--dropdown:hover .nav-dropdown,
 .nav-item--dropdown:focus-within .nav-dropdown {
-  display: flex;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 .nav-dropdown__link {
@@ -179,10 +238,12 @@ a {
   color: rgba(252, 251, 245, 0.8);
   font-size: 0.85rem;
   white-space: nowrap;
+  transition: color 0.15s, background-color 0.15s;
 }
 
 .nav-dropdown__link:hover {
   color: var(--color-gold);
+  background: rgba(196, 146, 27, 0.12);
 }
 
 .nav-dropdown__link--active {
@@ -429,6 +490,11 @@ a {
   background: transparent;
   text-decoration: none;
   color: inherit;
+  transition: transform 0.3s ease;
+}
+
+.card-item:hover {
+  transform: translateY(-4px);
 }
 
 .card-item__media {
@@ -437,6 +503,11 @@ a {
   overflow: hidden;
   background: var(--color-navy-light);
   border-radius: 8px 8px 0 0;
+  transition: box-shadow 0.3s ease;
+}
+
+.card-item:hover .card-item__media {
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.35);
 }
 
 .card-item__media img {
@@ -444,11 +515,11 @@ a {
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.25s ease;
+  transition: transform 0.5s ease;
 }
 
 .card-item:hover .card-item__media img {
-  transform: scale(1.03);
+  transform: scale(1.05);
 }
 
 .card-item__media-fallback {
@@ -533,11 +604,13 @@ a {
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
-  transition: text-decoration-thickness 0.15s;
+  transition: text-decoration-thickness 0.15s, color 0.15s, transform 0.15s;
 }
 
 .card-item:hover .card-item__link {
   text-decoration-thickness: 2px;
+  color: var(--color-gold-deep);
+  transform: translateX(2px);
 }
 
 .tag-filter {
@@ -840,10 +913,18 @@ a {
   padding: 20px;
   text-decoration: none;
   color: inherit;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.35);
 }
 
 .project-card:hover .card-item__link {
   text-decoration-thickness: 2px;
+  color: var(--color-gold-deep);
+  transform: translateX(2px);
 }
 
 .project-card__badge {
@@ -901,6 +982,18 @@ a {
   background: var(--surface-fill);
   border-radius: 12px;
   padding: 4px 18px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.accordion-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.35);
+}
+
+.accordion-item:hover .card-item__link {
+  text-decoration-thickness: 2px;
+  color: var(--color-gold-deep);
+  transform: translateX(2px);
 }
 
 .accordion-summary {
@@ -946,6 +1039,8 @@ a {
 
 .log-item:hover .card-item__link {
   text-decoration-thickness: 2px;
+  color: var(--color-gold-deep);
+  transform: translateX(2px);
 }
 
 .log-item__period {
