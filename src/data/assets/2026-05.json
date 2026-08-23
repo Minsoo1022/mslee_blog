@@ -1,0 +1,26 @@
+{
+  "date": "2026-05-24",
+  "totalAssets": 109681631,
+  "accounts": [
+    { "name": "ISA 계좌 (한투)", "amount": 54545947, "note": "투자 48,851,750 + 예수금 5,694,197" },
+    { "name": "한투 위탁계좌", "amount": 6244499, "note": "ETF 매수 운용 중" },
+    { "name": "한투 CMA", "amount": 431121, "note": "비상금" },
+    { "name": "펀드 3종", "amount": 26581656, "note": "환매 예정" },
+    { "name": "청년주택드림청약통장", "amount": 16250000, "note": "월 25만 납입, 리밸런싱 제외" },
+    { "name": "토스뱅크", "amount": 3450587, "note": "생활비" },
+    { "name": "하나은행", "amount": 494606, "note": "나라사랑통장" },
+    { "name": "신한은행", "amount": 74953, "note": "K패스·청약 이체용" },
+    { "name": "공모주 예수금", "amount": 377647, "note": "신한+미래+NH+삼성" },
+    { "name": "카카오페이머니", "amount": 957366, "note": "포인트" }
+  ],
+  "isaPortfolio": [
+    { "name": "TIGER 미국30년국채커버드콜액티브", "amount": 19182555, "returnPct": -4.12, "type": "안전자산" },
+    { "name": "RISE 대형고배당10TR", "amount": 11631750, "returnPct": 36.28, "type": "위험자산" },
+    { "name": "KODEX 미국나스닥100", "amount": 2104795, "returnPct": 20.80, "type": "위험자산" },
+    { "name": "TIGER 2차전지테마", "amount": 9786000, "returnPct": 85.53, "type": "위험자산" },
+    { "name": "KODEX 미국우주항공", "amount": 3584250, "returnPct": 4.08, "type": "위험자산" },
+    { "name": "ACE 글로벌자율주행액티브", "amount": 1613940, "returnPct": 11.21, "type": "위험자산" },
+    { "name": "TIGER 코스닥150", "amount": 948460, "returnPct": 5.05, "type": "위험자산" }
+  ],
+  "isaCash": 5694197
+}
