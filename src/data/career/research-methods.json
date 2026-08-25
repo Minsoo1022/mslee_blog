@@ -1,0 +1,56 @@
+[
+  {
+    "id": "method-symmetric-eis",
+    "trackId": "lfp-ess",
+    "name": "대칭셀 EIS (Symmetric Cell EIS)",
+    "whatItMeasures": "전극의 순수 이온수송 저항(tortuosity)만 분리해서 측정",
+    "whyUsed": "일반 EIS는 계면저항과 이온저항이 섞여 나와서, 저항-속도 역전 현상의 원인이 전자저항인지 이온저항인지 구분이 안 됨. TBAPF₆ blocking electrolyte를 써서 전자적 기여를 배제하고 이온저항만 남긴다.",
+    "howInterpreted": "저주파 Warburg 영역의 기울기로 이온저항을 피팅. 값이 낮을수록 이온이 전극 내부를 더 잘 이동한다는 뜻.",
+    "keyResult": "GMS 78.3Ω vs MWCNT 93.9Ω — GMS가 약 17% 낮음"
+  },
+  {
+    "id": "method-hppc",
+    "trackId": "lfp-ess",
+    "name": "HPPC (SOC별 DC-IR)",
+    "whatItMeasures": "SOC(충전상태)별 직류저항(DC-IR)",
+    "whyUsed": "실제 방전 상황에서의 순간 저항을 SOC 전 구간에 걸쳐 확인하기 위함. 대칭셀 EIS가 정적 상태 측정이라면 HPPC는 동적 방전 조건의 저항.",
+    "howInterpreted": "펄스 방전 시 전압 강하폭을 전류로 나눠 저항 산출. 전 SOC 구간에서 GMS가 높게 나오는 게 저항-속도 역전 현상을 뒷받침.",
+    "keyResult": "SOC50 기준 GMS 0.96Ω vs MWCNT 0.79Ω"
+  },
+  {
+    "id": "method-contact-angle",
+    "trackId": "lfp-ess",
+    "name": "Contact Angle (접촉각)",
+    "whatItMeasures": "전해액이 전극 표면에 떨어졌을 때 얼마나 빨리, 깊이 젖어드는가",
+    "whyUsed": "이온수송 우위의 원인이 '전해액 함침 속도'일 가능성을 확인하기 위해. 대칭셀 EIS 결과와 방향이 일치하는지 교차검증하는 역할.",
+    "howInterpreted": "각도가 낮을수록 표면 젖음성이 좋다는 뜻. 시간에 따라 감소하는 각도의 기울기도 함침 속도를 보여줌.",
+    "keyResult": "3초 시점 GMS 36.5° vs MWCNT 40.7°"
+  },
+  {
+    "id": "method-mip",
+    "trackId": "lfp-ess",
+    "name": "MIP (수은압입법 기공분석)",
+    "whatItMeasures": "전극 내부 기공의 크기 분포와 총 기공량",
+    "whyUsed": "GMS의 메조기공 구조가 실제 전극 안에서도 유지되는지, 그리고 그 기공 분포가 MWCNT와 어떻게 다른지 정량 확인하기 위함.",
+    "howInterpreted": "D50(중앙값 기공크기)이 작을수록 더 미세한 기공 구조. 5µm 이상 대공극은 크랙에 의한 아티팩트일 가능성이 있어 별도 해석 필요.",
+    "keyResult": "D50 GMS 50.2nm vs MWCNT 58.3nm"
+  },
+  {
+    "id": "method-gitt",
+    "trackId": "lfp-ess",
+    "name": "GITT (정전류간헐적정법)",
+    "whatItMeasures": "리튬 이온의 고체상 확산계수",
+    "whyUsed": "LFP는 올리빈 2상 반응이라 GITT 적용에 방법론적 한계가 있지만(평탄 전압 구간), 대칭셀 EIS 결과의 보조 교차검증 용도로 1차 측정.",
+    "howInterpreted": "relaxation 구간 전압 변화로 확산계수 산출. 구간 내 변동이 커서 확정적 결론보다는 방향성 참고용.",
+    "keyResult": "GMS 1.56×10⁻¹⁸ cm²/s vs MWCNT 1.19×10⁻¹⁸ cm²/s (약 31% 우위)"
+  },
+  {
+    "id": "method-springback",
+    "trackId": "lfp-ess",
+    "name": "Spring-back 측정",
+    "whatItMeasures": "압연 직후부터 시간 경과에 따른 전극 두께 회복 정도",
+    "whyUsed": "GMS의 고탄성 특성이 전극 단위에서 실제로 두께 회복(스프링백)으로 나타나는지, 그리고 이게 크랙과 관련 있는지 확인.",
+    "howInterpreted": "T0/T48h/1주/2주 시점별 두께 비교. 압연 온도(RT vs HT)에 따라 스프링백 억제 효과도 함께 검증.",
+    "keyResult": "2주 시점 GMS 105.5~106μm vs MWCNT 104~106μm (RT), HT 조건 비교 진행 중"
+  }
+]

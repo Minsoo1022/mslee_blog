@@ -17,6 +17,11 @@ export function formatDateLabel(date: string): string {
   return d ? `${y}.${m}.${d}` : `${y}.${m}`;
 }
 
+/** "2026-08-17" → "260817" (격주 업데이트 카드 라벨용) */
+export function formatYYMMDD(date: string): string {
+  return date.replaceAll("-", "").slice(2);
+}
+
 /** YYYY-MM-DD 문자열 기준 D-day 계산 (오늘 대비 남은 일수, 음수면 지남) */
 export function daysUntil(targetDate: string): number {
   const target = new Date(`${targetDate}T00:00:00`);

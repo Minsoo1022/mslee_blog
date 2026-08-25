@@ -1,0 +1,35 @@
+[
+  {
+    "trackId": "lfp-ess",
+    "stages": [
+      {
+        "id": "screening",
+        "label": "스크리닝",
+        "status": "완료",
+        "heading": "왜 GMS인가",
+        "body": "GMS(Graphene MesoSponge)는 25nm 메조기공, 700m²/g 비표면적을 가진 고탄성 도전재. 초기 스크리닝(G/M/G+S/M+S 4축)에서 GMS 계열이 로딩 15~22mg/cm² 전 구간, 5C/0.33C 기준 최고 유지율을 기록했다. 로딩 22mg/cm² 기준 5C 유지율 GMS 29.79% vs MWCNT 20.84% vs CB 15.18%로, 크랙 마지노선까지도 우위가 재현됐다."
+      },
+      {
+        "id": "mechanism",
+        "label": "메커니즘 규명",
+        "status": "완료",
+        "heading": "저항-속도 역전과 그 증거",
+        "body": "Hioki 접촉저항, HPPC DC-IR 모두 GMS가 MWCNT보다 높다(SOC50 기준 0.96Ω vs 0.79Ω, 20~30% 높음). 그런데도 5C 성능은 GMS가 더 좋다. 대칭셀 EIS(TBAPF₆ blocking electrolyte, Landesfeind & Gasteiger 2016 프로토콜)로 순수 이온저항만 분리 측정한 결과 GMS 78.3Ω, MWCNT 93.9Ω로 GMS가 약 17% 낮았다. Contact angle(n=5, 다중 시점)에서도 전 시간대에서 GMS가 더 낮은 접촉각(3초 36.5° vs 40.7°), GITT 확산계수도 GMS가 약 31% 높아 같은 방향을 가리켰다. 전자저항과 이온수송이 서로 독립적인 두 축이며, 두꺼운 전극에서는 이온수송 쪽이 rate 성능을 더 크게 좌우한다는 결론."
+      },
+      {
+        "id": "process",
+        "label": "공정·구조 이슈",
+        "status": "완료",
+        "heading": "크랙과 접착력, 그리고 공정 조건",
+        "body": "Peel test 결과 Cohesion이 MWCNT 312.7 gf 대비 GMS 208.9 gf로 약 1.5배 낮아, GMS 전극의 낮은 내부 응집력이 크랙 잔존의 구조적 원인으로 확인됐다. 이를 해결하기 위해 슬러리 고형분을 56%→61%로 올리고(ANP 4wt% 고형분 분산액 도입), 집전체는 양면 Primer foil로 확정해 접착력과 크랙 완화 근거를 확보했다. MIP 기공분석에서는 GMS 기공분포가 일관되게 더 작은 쪽에 위치(D50 50.2nm vs 58.3nm)해 메조기공 구조가 전극 내에서도 유지됨을 시사했다."
+      },
+      {
+        "id": "ongoing",
+        "label": "진행중 & 미해결",
+        "status": "진행중",
+        "heading": "HT 압연 패러독스",
+        "body": "80°C 열간 압연 시 GMS 계면저항이 오히려 MWCNT보다 낮아지고 변동성도 안정화된다(CV 30%→10.6%, RT 1.01Ω·cm²→HT 0.25Ω·cm²). 그런데 5C rate는 RT 대비 오히려 하락한다(36.3%→26.7%). 계면저항 개선이 rate 성능 개선으로 이어지지 않는 이 역설이 현재 가장 중요한 미해결 질문이며, GMS 메조기공이 고온 압연 중 손상될 가능성을 가설로 검증 중이다.\n\n남은 질문:\n- HT 압연이 GMS 메조기공 구조를 손상시키는가 — HT 조건 대칭셀 EIS로 검증 예정 (최우선 과제)\n- HPPC GMS 재현측정 (n=1 → n≥2)\n- BET(BJH) 분석으로 전극/CBD 필름 내 메조기공 생존 여부 확인 대기 중"
+      }
+    ]
+  }
+]
