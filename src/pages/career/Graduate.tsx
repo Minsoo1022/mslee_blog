@@ -1,18 +1,15 @@
 import GraduateProjectCard from "../../components/GraduateProjectCard";
 import CompletedProjectAccordion from "../../components/CompletedProjectAccordion";
-import ResearchLogListItem from "../../components/ResearchLogListItem";
-import {
-  getCompletedProjects,
-  getInProgressProjects,
-  getResearchLog,
-} from "../../lib/loadGraduate";
+import ResearchTrackCard from "../../components/ResearchTrackCard";
+import { getCompletedProjects, getInProgressProjects } from "../../lib/loadGraduate";
+import { getResearchTracks } from "../../lib/loadResearch";
 import { admissionLabel, graduationDate, researchFocus } from "../../data/careerConfig";
 import { daysUntil } from "../../lib/format";
 
 export default function Graduate() {
+  const tracks = getResearchTracks();
   const inProgress = getInProgressProjects();
   const completed = getCompletedProjects();
-  const log = getResearchLog();
   const dDay = daysUntil(graduationDate);
 
   return (
@@ -35,7 +32,28 @@ export default function Graduate() {
       </section>
 
       <section>
-        <h2 className="section-title">진행 중 프로젝트</h2>
+        <h2 className="section-title">내 연구</h2>
+        <p className="page-sub" style={{ marginBottom: 16 }}>
+          GMS 도전재 기반 두 갈래 연구
+        </p>
+        {tracks.length > 0 ? (
+          <div className="project-grid">
+            {tracks.map((track) => (
+              <ResearchTrackCard key={track.id} track={track} />
+            ))}
+          </div>
+        ) : (
+          <p className="page-sub">등록된 연구 트랙이 없습니다.</p>
+        )}
+      </section>
+
+      <section>
+        <h2 className="section-title">부가 프로젝트</h2>
+        <p className="page-sub" style={{ marginBottom: 16 }}>
+          핵심 연구 트랙 외에 진행하는 부가 프로젝트 (예: GT 습식공정정립화 등)
+        </p>
+
+        <h3>진행 중</h3>
         {inProgress.length > 0 ? (
           <div className="project-grid">
             {inProgress.map((p) => (
@@ -45,10 +63,8 @@ export default function Graduate() {
         ) : (
           <p className="page-sub">진행 중인 프로젝트가 없습니다.</p>
         )}
-      </section>
 
-      <section>
-        <h2 className="section-title">완료한 프로젝트</h2>
+        <h3>완료</h3>
         {completed.length > 0 ? (
           <div className="accordion-list">
             {completed.map((p) => (
@@ -57,22 +73,6 @@ export default function Graduate() {
           </div>
         ) : (
           <p className="page-sub">완료한 프로젝트가 아직 없습니다.</p>
-        )}
-      </section>
-
-      <section>
-        <h2 className="section-title">연구 진행 상황 로그</h2>
-        <p className="page-sub" style={{ marginBottom: 16 }}>
-          박사님께 보내는 격주 bi-weekly 보고 내용을 요약해서 쌓는 기록
-        </p>
-        {log.length > 0 ? (
-          <div className="log-list">
-            {log.map((entry) => (
-              <ResearchLogListItem key={entry.id} entry={entry} />
-            ))}
-          </div>
-        ) : (
-          <p className="page-sub">아직 기록이 없습니다.</p>
         )}
       </section>
     </div>

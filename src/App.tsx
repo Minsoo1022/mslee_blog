@@ -9,6 +9,7 @@ import JobPrep from "./pages/career/JobPrep";
 import Graduate from "./pages/career/Graduate";
 import ProjectDetail from "./pages/career/ProjectDetail";
 import ResearchLogDetail from "./pages/career/ResearchLogDetail";
+import ResearchTrackDetail from "./pages/career/ResearchTrackDetail";
 
 // GitHub Pages는 서브경로에서 서빙되므로 BrowserRouter 대신 HashRouter 사용
 // (랩 홈페이지와 동일한 방식)
@@ -27,6 +28,7 @@ export default function App() {
           {/* Career: 대학원이 메인이라 /career는 /career/graduate로 리다이렉트 */}
           <Route path="career" element={<Navigate to="/career/graduate" replace />} />
           <Route path="career/graduate" element={<Graduate />} />
+          <Route path="career/graduate/research/:trackId" element={<ResearchTrackDetail />} />
           <Route path="career/graduate/project/:id" element={<ProjectDetail />} />
           <Route path="career/graduate/log/:id" element={<ResearchLogDetail />} />
           <Route path="career/job-prep" element={<JobPrep />} />

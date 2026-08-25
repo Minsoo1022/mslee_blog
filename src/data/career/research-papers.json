@@ -1,0 +1,32 @@
+[
+  {
+    "id": "paper-landesfeind-2016",
+    "trackId": "lfp-ess",
+    "title": "Tortuosity Determination of Battery Electrodes and Separators by Impedance Spectroscopy",
+    "authors": "Landesfeind, Gasteiger",
+    "venue": "Journal of the Electrochemical Society",
+    "year": 2016,
+    "summary": "대칭셀 EIS로 전극 tortuosity(이온수송 저항)를 측정하는 프로토콜. TBAPF6 blocking electrolyte로 전자적 기여를 배제하고 순수 이온저항만 분리한다. LFP@G/M 대칭셀 실험 방법론의 표준 프레임으로 채택했다.",
+    "tags": ["EIS", "방법론", "이온수송"]
+  },
+  {
+    "id": "paper-kim-natureenergy-2025",
+    "trackId": "lfp-ess",
+    "title": "Decoupling Electronic and Ionic Resistance in Thick Battery Electrodes",
+    "authors": "Kim et al.",
+    "venue": "Nature Energy",
+    "year": 2025,
+    "summary": "후막 전극에서 전자저항(Re)과 이온저항(Rion)을 디커플링하는 프레임워크를 제시한다. Resistance-rate inversion 서사의 이론적 배경이 된 논문이다.",
+    "tags": ["후막전극", "이론", "저항 디커플링"]
+  },
+  {
+    "id": "paper-hong-esm-2026",
+    "trackId": "lfp-ess",
+    "title": "Viscoelastic Behavior of Carbon-Binder Domain and Electrode Spring-back",
+    "authors": "Hong et al.",
+    "venue": "Energy Storage Materials",
+    "year": 2026,
+    "summary": "CBD(Carbon-Binder Domain)의 점탄성 거동과 전극 spring-back 현상을 다룬다. GMS 전극의 spring-back 측정(T0/T1h/T24h) 설계의 참고 근거로 사용했다.",
+    "tags": ["Spring-back", "CBD", "방법론"]
+  }
+]

@@ -32,5 +32,88 @@
     "completed": ["GeoDict 라이선스/환경 세팅", "전극 미세구조 초기 모델 구축"],
     "nextSteps": ["실측 SEM 이미지와 미세구조 비교 검증", "시뮬레이션 파라미터 캘리브레이션"],
     "image": null
+  },
+  {
+    "id": "log-lfp-260619",
+    "trackId": "lfp-ess",
+    "periodStart": "2026-06-05",
+    "periodEnd": "2026-06-19",
+    "title": "GMS BE-10 LFP 1차 DoE 착수",
+    "completed": [
+      "LFP(GMS BE-10) 1차 실험 DoE 조건 4개 유변물성+전극저항+Cell Test 진행"
+    ],
+    "nextSteps": [
+      "1차 DoE 4조건 출력 데이터 정리, GMS 습식 LFP 적용 가능성 확인",
+      "NCM622 결과와 유사 경향성 보이는지 비교"
+    ],
+    "image": null
+  },
+  {
+    "id": "log-lfp-260706",
+    "trackId": "lfp-ess",
+    "periodStart": "2026-06-22",
+    "periodEnd": "2026-07-06",
+    "title": "재현성 검증 및 Contact angle·EIS 착수",
+    "completed": [
+      "MWCNT 신규 셀 C-rate 재현성 검증",
+      "LFP DoE 셀 cycle test 데이터 업데이트"
+    ],
+    "nextSteps": [
+      "MWCNT vs GMS 단독 vs SWCNT+GMS 압연 전극 Contact angle 측정",
+      "Formation 완료 셀 대상 EIS 측정 (Li+ 이온 확산 관점 접근)"
+    ],
+    "image": null
+  },
+  {
+    "id": "log-lfp-260717",
+    "trackId": "lfp-ess",
+    "periodStart": "2026-07-06",
+    "periodEnd": "2026-07-17",
+    "title": "GMS 4wt% 분산액 수령, Spring-back 측정 착수",
+    "completed": [
+      "ANP GMS 4wt% 고형분 분산액 도착 확인, SWCNT+GMS 코팅 후 크랙 확인 (목표 고형분 60%+)",
+      "로딩 20·22 셀 12개(3조성×2로딩×2셀) 출력 업데이트"
+    ],
+    "nextSteps": [
+      "Spring-back 측정(T0/T1h/T24h) — SWCNT+GMS/MWCNT/CB 조성별 비교",
+      "압연 온도가 스프링백뿐 아니라 크랙 표면상태에도 영향 주는지 동일 실험에서 검증"
+    ],
+    "image": null
+  },
+  {
+    "id": "log-lfp-260817",
+    "trackId": "lfp-ess",
+    "periodStart": "2026-07-17",
+    "periodEnd": "2026-08-17",
+    "title": "논문용 실험설계 확정 + HT 압연 패러독스 발견",
+    "completed": [
+      "슬러리 고형분 61% 확정, 양면 Primer foil 채택 — 접착력·크랙 완화 근거 확보",
+      "LFP@G/M 순수 비교 체제로 전환(SWCNT 블렌딩 조성 배제), 분석 로딩 20mg/cm² 고정",
+      "MIP 기공분석 완료 — GMS 기공분포가 일관되게 더 작은 쪽(D50 50.2nm vs 58.3nm)",
+      "GITT 1차 측정 — GMS 확산계수가 MWCNT보다 약 31% 높음 (대칭셀 EIS와 방향 일치)",
+      "HPPC DC-IR 측정 — GMS가 MWCNT보다 20~30% 높은 DC-IR인데도 5C는 GMS 우위 (저항-속도 역전 재확인)"
+    ],
+    "nextSteps": [
+      "HT(80°C) 압연 후 계면저항은 개선되지만 5C rate는 오히려 하락하는 패러독스 발견 — 원인 규명 필요",
+      "HT 조건 대칭셀 EIS 실행 (메조기공 손상 가설 검증) — 최우선 과제",
+      "HPPC GMS 재현측정 (n=1 → n≥2)"
+    ],
+    "image": null
+  },
+  {
+    "id": "log-ncm-260819",
+    "trackId": "ncm-formfactor",
+    "periodStart": "2026-08-18",
+    "periodEnd": "2026-08-19",
+    "title": "폼팩터프리 과제 Kick-off 워크숍",
+    "completed": [
+      "1차년 과제 Kick-off 워크숍 참석 (호텔 오노마 대전)",
+      "KIST 담당 파트 확인 — 하이브리드 도전재(SWCNT+GMS) 시스템 개발 및 양극 계면 안정화"
+    ],
+    "nextSteps": [
+      "1단계(~28년) 정량 목표 세부 실행계획 수립 (양극 면적당 용량 ≥4.0 mAh/cm², 고온 저장저항 증가율 ≤30%)",
+      "노션에 마일스톤(연차보고/중간평가/최종평가) 등록, LFP 타임라인과 교차 체크"
+    ],
+    "image": null
   }
 ]

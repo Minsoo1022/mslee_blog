@@ -3,7 +3,7 @@
 // 정확한 날짜가 정해지면 이 값만 바꾸면 됩니다.
 export const graduationDate = "2028-02-29"; // TODO: 정확한 졸업(예정)일로 수정
 export const admissionLabel = "2026.03 입학 · 2028 졸업 예정";
-export const researchFocus = "배터리 소재(LFP+GMS 도전재) 연구";
+export const researchFocus = "GMS 도전재 기반 LFP·NCM 후막 전극 연구";
 
 export interface RoadmapStage {
   ageRange: string;
