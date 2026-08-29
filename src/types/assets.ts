@@ -26,6 +26,10 @@ export interface MonthlySnapshot {
   isaPortfolio: IsaHolding[];
   /** ISA 예수금(현금) — 위험자산 비중 계산에서 제외 */
   isaCash: number;
+  /** 위탁계좌 보유 종목 (선택 — 없으면 위탁 파이차트/전체자산 비중 계산에서 제외) */
+  brokeragePortfolio?: IsaHolding[];
+  /** 위탁계좌 예수금(현금) (선택) */
+  brokerageCash?: number;
 }
 
 export interface RiskRatio {
@@ -35,4 +39,11 @@ export interface RiskRatio {
   riskPct: number;
   status: "buy_risk" | "sell_risk" | "normal";
   statusLabel: string;
+}
+
+/** 전체자산 계층형 구성 (주식[ISA/위탁] · 주택청약 · 예수금) */
+export interface AssetHierarchy {
+  stocks: { isa: number; brokerage: number };
+  housing: number;
+  cash: number;
 }

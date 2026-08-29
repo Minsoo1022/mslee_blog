@@ -410,6 +410,61 @@ a {
   margin-bottom: 0;
 }
 
+/* 월별 총자산 추이 그래프 옆에 "이번 달 수익률" 카드를 나란히 배치 */
+.trend-with-return {
+  display: flex;
+  gap: 20px;
+  align-items: stretch;
+}
+
+.trend-with-return__chart {
+  flex: 1;
+  min-width: 0;
+}
+
+.monthly-return-card {
+  flex: 0 0 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media (max-width: 700px) {
+  .trend-with-return {
+    flex-direction: column;
+  }
+
+  .monthly-return-card {
+    flex-basis: auto;
+  }
+}
+
+/* 전체자산 계층형(2단 도넛) 차트 범례 — recharts 기본 Legend 대신 직접 렌더 */
+.asset-hierarchy-chart__legend {
+  list-style: none;
+  margin: 4px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  justify-content: center;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+.asset-hierarchy-chart__legend li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.asset-hierarchy-chart__swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
 /* ── 테이블 (Assets 전용, 라이트) ─────────────────────── */
 .table-wrap {
   overflow-x: auto;
