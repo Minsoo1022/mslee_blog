@@ -7,10 +7,12 @@ interface Props {
   /** 예수금을 별도 슬라이스로 포함시키고 싶을 때 (0/undefined면 생략) */
   cashAmount?: number;
   cashLabel?: string;
+  /** true면 조각 위 % 라벨과 범례를 그리지 않음 (옆에 표로 대체할 때) */
+  bare?: boolean;
 }
 
 // 럭셔리 톤에 맞춘 골드~플럼 계열 팔레트 (무지개색 지양)
-const COLORS = [
+export const PORTFOLIO_COLORS = [
   "#C4921B", // gold
   "#251019", // plum black
   "#8A867A", // warm gray
@@ -25,14 +27,19 @@ const COLORS = [
 // 라벨끼리 겹쳐서 깨져 보이던 문제 완화
 const MIN_LABEL_PERCENT = 0.06;
 
-export default function PortfolioPieChart({ holdings, cashAmount, cashLabel = "예수금" }: Props) {
+export default function PortfolioPieChart({
+  holdings,
+  cashAmount,
+  cashLabel = "예수금",
+  bare = false,
+}: Props) {
   const data = holdings.map((h) => ({ name: h.name, value: h.amount }));
   if (cashAmount) {
     data.push({ name: cashLabel, value: cashAmount });
   }
 
   return (
-    <ResponsiveContainer width="100%" height={300}>
+    <ResponsiveContainer width="100%" height={bare ? 220 : 300}>
       <PieChart>
         <Pie
           data={data}
@@ -40,25 +47,30 @@ export default function PortfolioPieChart({ holdings, cashAmount, cashLabel = "�
           nameKey="name"
           cx="50%"
           cy="50%"
-          outerRadius={100}
-          label={(entry: { percent?: number }) =>
-            (entry.percent ?? 0) < MIN_LABEL_PERCENT
-              ? ""
-              : `${((entry.percent ?? 0) * 100).toFixed(0)}%`
+          outerRadius={bare ? 100 : 100}
+          label={
+            bare
+              ? false
+              : (entry: { percent?: number }) =>
+                  (entry.percent ?? 0) < MIN_LABEL_PERCENT
+                    ? ""
+                    : `${((entry.percent ?? 0) * 100).toFixed(0)}%`
           }
         >
           {data.map((entry, i) => (
-            <Cell key={entry.name} fill={COLORS[i % COLORS.length]} />
+            <Cell key={entry.name} fill={PORTFOLIO_COLORS[i % PORTFOLIO_COLORS.length]} />
           ))}
         </Pie>
         {/* 커서를 따라다니지 않고 차트 좌상단 고정 위치에 떠서, 파이 라벨과 안 겹치게 */}
         <Tooltip formatter={(value) => formatKRW(value as number)} position={{ x: 0, y: 0 }} />
-        <Legend
-          layout="vertical"
-          align="right"
-          verticalAlign="middle"
-          wrapperStyle={{ fontSize: 12, lineHeight: "20px" }}
-        />
+        {!bare && (
+          <Legend
+            layout="vertical"
+            align="right"
+            verticalAlign="middle"
+            wrapperStyle={{ fontSize: 12, lineHeight: "20px" }}
+          />
+        )}
       </PieChart>
     </ResponsiveContainer>
   );

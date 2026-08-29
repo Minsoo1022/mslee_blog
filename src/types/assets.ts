@@ -40,10 +40,3 @@ export interface RiskRatio {
   status: "buy_risk" | "sell_risk" | "normal";
   statusLabel: string;
 }
-
-/** 전체자산 계층형 구성 (주식[ISA/위탁] · 주택청약 · 예수금) */
-export interface AssetHierarchy {
-  stocks: { isa: number; brokerage: number };
-  housing: number;
-  cash: number;
-}

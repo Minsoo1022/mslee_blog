@@ -806,40 +806,11 @@ a {
   color: var(--color-text);
 }
 
-/* ── 위험자산 게이지 (Assets 전용, 라이트) ────────────── */
-.risk-gauge {
-  padding-top: 8px;
-}
-
-.risk-gauge__track {
-  position: relative;
-  height: 10px;
-  background: #f1ede1;
-  border: 1px solid var(--color-border);
-}
-
-.risk-gauge__target-zone {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  background: rgba(196, 146, 27, 0.22);
-}
-
-.risk-gauge__marker {
-  position: absolute;
-  top: -4px;
-  width: 2px;
-  height: 18px;
-  background: var(--color-navy);
-  transform: translateX(-1px);
-}
-
-.risk-gauge__scale {
+/* ── 위험자산 vs 안전자산 도넛 + 상태 배지 (Assets 전용, 라이트) ── */
+.risk-donut {
   display: flex;
-  justify-content: space-between;
-  font-size: 0.74rem;
-  color: var(--color-text-muted);
-  margin-top: 8px;
+  flex-direction: column;
+  align-items: stretch;
 }
 
 .risk-gauge__status {
@@ -862,6 +833,165 @@ a {
   border-left-color: var(--color-positive);
   color: var(--color-positive);
   background: rgba(74, 111, 77, 0.08);
+}
+
+/* ── Assets 상단 다크 히어로 배너 ─────────────────────── */
+.assets-hero {
+  min-height: 200px;
+  border-radius: 18px;
+  margin-bottom: 24px;
+  padding: 28px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  color: var(--color-ivory);
+  background-color: var(--color-navy);
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cg stroke='%23c4921b' stroke-opacity='0.08' stroke-width='1'%3E%3Cline x1='0' y1='60' x2='320' y2='10'/%3E%3Cline x1='30' y1='320' x2='230' y2='0'/%3E%3Cline x1='160' y1='0' x2='320' y2='210'/%3E%3Cline x1='0' y1='180' x2='140' y2='320'/%3E%3Cline x1='90' y1='0' x2='0' y2='120'/%3E%3C/g%3E%3C/svg%3E"),
+    linear-gradient(135deg, var(--color-navy) 0%, var(--color-navy-light) 100%);
+  background-repeat: repeat, no-repeat;
+  background-size: 320px 320px, cover;
+}
+
+.assets-hero__title {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  margin: 0 0 8px;
+  color: var(--color-ivory);
+}
+
+.assets-hero__subtitle {
+  margin: 0;
+  font-size: 0.9rem;
+  color: rgba(252, 251, 245, 0.7);
+}
+
+.assets-hero__total-label {
+  font-size: 0.8rem;
+  color: rgba(252, 251, 245, 0.7);
+  text-align: right;
+  margin-bottom: 6px;
+}
+
+.assets-hero__total-value {
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: var(--color-gold);
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* ── 계좌별 현황 표 아이콘 ────────────────────────────── */
+.account-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+  vertical-align: -3px;
+  color: var(--color-text-muted);
+}
+
+/* ── 안전자산 / 위험자산 목록 박스 ────────────────────── */
+.safe-risk-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.asset-category-box {
+  background: #fff;
+  border-radius: 16px;
+  padding: 22px;
+}
+
+.asset-category-box__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.asset-category-box__header h3 {
+  margin: 0;
+  font-size: 1.02rem;
+}
+
+.asset-category-box__icon {
+  display: inline-flex;
+}
+
+.asset-category-box__icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.asset-category-box__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.asset-category-box__list li {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 0.86rem;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 8px;
+}
+
+.asset-category-box__list li:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.asset-category-box__name {
+  flex: 1;
+  color: var(--color-text);
+}
+
+.asset-category-box__amount {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.asset-category-box__pct {
+  color: var(--color-text-muted);
+  font-size: 0.78rem;
+  min-width: 42px;
+  text-align: right;
+}
+
+/* ── ISA/위탁 파이 + 옆 표 (전체 너비, 세로 스택) ─────── */
+.portfolio-breakdown-row__body {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.portfolio-breakdown-row__chart {
+  flex: 0 0 280px;
+  max-width: 100%;
+}
+
+.portfolio-breakdown-row__table {
+  flex: 1;
+  min-width: 260px;
+}
+
+.portfolio-breakdown-row__swatch {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  margin-right: 8px;
 }
 
 /* ── 로드맵 (Career, 다크) ────────────────────────────── */

@@ -2,18 +2,20 @@ import SummaryCard from "../components/SummaryCard";
 import AccountsTable from "../components/AccountsTable";
 import AssetTrendChart from "../components/AssetTrendChart";
 import MonthlyReturnCard from "../components/MonthlyReturnCard";
-import AssetHierarchyChart from "../components/AssetHierarchyChart";
-import PortfolioPieChart from "../components/PortfolioPieChart";
-import RiskGauge from "../components/RiskGauge";
+import RiskDonutChart from "../components/RiskDonutChart";
+import AssetCategoryBox from "../components/AssetCategoryBox";
+import PortfolioBreakdownRow from "../components/PortfolioBreakdownRow";
 import StockReturnBarChart from "../components/StockReturnBarChart";
+import { IconShieldCheck, IconTrendingUp } from "../components/assetIcons";
 import {
-  getAssetHierarchy,
   getAssetTrend,
   getLatestSnapshot,
   getMoMDiff,
   getMoMReturnPct,
   getPreviousSnapshot,
+  getRiskAssetItems,
   getRiskRatio,
+  getSafeAssetItems,
 } from "../lib/loadAssets";
 import { formatKRW, formatPct } from "../lib/format";
 
@@ -36,13 +38,20 @@ export default function Assets() {
   const momDiff = getMoMDiff(latest, previous);
   const trend = getAssetTrend();
   const risk = getRiskRatio(latest);
-  const hierarchy = getAssetHierarchy(latest);
+  const safeItems = getSafeAssetItems(latest);
+  const riskItems = getRiskAssetItems(latest);
 
   return (
     <div className="page">
-      <div className="page-header">
-        <h1>Assets</h1>
-        <p className="page-sub">기준일: {latest.date}</p>
+      <div className="assets-hero">
+        <div>
+          <h1 className="assets-hero__title">Assets</h1>
+          <p className="assets-hero__subtitle">기준일: {latest.date}</p>
+        </div>
+        <div>
+          <div className="assets-hero__total-label">총자산</div>
+          <div className="assets-hero__total-value">{formatKRW(latest.totalAssets)}</div>
+        </div>
       </div>
 
       <div className="summary-grid">
@@ -58,6 +67,26 @@ export default function Assets() {
           value={`${risk.riskPct.toFixed(1)}%`}
           tone={risk.status === "normal" ? "neutral" : "negative"}
           sub={risk.statusLabel}
+        />
+      </div>
+
+      <section className="panel">
+        <h2>위험자산 vs 안전자산 (전체 자산 기준)</h2>
+        <RiskDonutChart risk={risk} />
+      </section>
+
+      <div className="safe-risk-grid">
+        <AssetCategoryBox
+          title="안전자산"
+          icon={IconShieldCheck}
+          items={safeItems}
+          accentColor="#5C86A8"
+        />
+        <AssetCategoryBox
+          title="위험자산"
+          icon={IconTrendingUp}
+          items={riskItems}
+          accentColor="#B85C5C"
         />
       </div>
 
@@ -88,35 +117,24 @@ export default function Assets() {
         </div>
       </section>
 
-      <section>
-        <h2 className="section-title">자산 구성</h2>
-        <div className="panel-grid">
-          <section className="panel">
-            <h2>전체자산 계층 구성</h2>
-            <AssetHierarchyChart hierarchy={hierarchy} />
-          </section>
-          <section className="panel">
-            <h2>ISA 포트폴리오 구성</h2>
-            <PortfolioPieChart holdings={latest.isaPortfolio} cashAmount={latest.isaCash} />
-          </section>
-          <section className="panel">
-            <h2>위탁계좌 포트폴리오 구성</h2>
-            {latest.brokeragePortfolio ? (
-              <PortfolioPieChart
-                holdings={latest.brokeragePortfolio}
-                cashAmount={latest.brokerageCash}
-              />
-            ) : (
-              <p className="page-sub">위탁계좌 보유 종목 데이터가 없습니다.</p>
-            )}
-          </section>
-        </div>
-      </section>
+      <PortfolioBreakdownRow
+        title="ISA 포트폴리오 구성"
+        holdings={latest.isaPortfolio}
+        cashAmount={latest.isaCash}
+      />
 
-      <section className="panel">
-        <h2>위험자산 vs 안전자산 (전체 자산 기준)</h2>
-        <RiskGauge risk={risk} />
-      </section>
+      {latest.brokeragePortfolio ? (
+        <PortfolioBreakdownRow
+          title="위탁계좌 포트폴리오 구성"
+          holdings={latest.brokeragePortfolio}
+          cashAmount={latest.brokerageCash}
+        />
+      ) : (
+        <section className="panel">
+          <h2>위탁계좌 포트폴리오 구성</h2>
+          <p className="page-sub">위탁계좌 보유 종목 데이터가 없습니다.</p>
+        </section>
+      )}
 
       <section className="panel">
         <h2>종목별 수익률 (ISA)</h2>

@@ -1,4 +1,4 @@
-import type { AssetHierarchy, IsaHolding, MonthlySnapshot, RiskRatio } from "../types/assets";
+import type { IsaHolding, MonthlySnapshot, RiskRatio } from "../types/assets";
 
 // src/data/assets/YYYY-MM.json 파일을 전부 자동으로 읽어온다.
 // 새 달 파일을 추가하기만 하면 여기서 자동으로 인식되어
@@ -43,8 +43,11 @@ export function getMoMDiff(
 const RISK_TARGET_MIN = 65;
 const RISK_TARGET_MAX = 75;
 
-// 자산 구성 다이어그램에서 "주택청약"으로 따로 떼어낼 계좌명
-const HOUSING_ACCOUNT_NAME = "청년주택드림청약통장";
+// isaPortfolio/brokeragePortfolio 및 isaCash/brokerageCash로 이미 별도 집계되는
+// 두 계좌는, "그 외 계좌 전부는 안전자산"으로 취급하는 로직에서 중복 합산되지
+// 않도록 이름으로 제외한다.
+const ISA_ACCOUNT_NAME = "ISA 계좌 (한투)";
+const BROKERAGE_ACCOUNT_NAME = "한투 위탁계좌";
 
 function sumByType(holdings: IsaHolding[], type: IsaHolding["type"]): number {
   return holdings.filter((h) => h.type === type).reduce((sum, h) => sum + h.amount, 0);
@@ -85,26 +88,54 @@ export function getRiskRatio(snapshot: MonthlySnapshot): RiskRatio {
   return buildRiskRatio(riskSum, snapshot.totalAssets);
 }
 
-/**
- * 전체자산 계층형 구성 (주식[ISA/위탁] / 주택청약 / 예수금·현금성 자산).
- * 예수금은 나머지(잔차)로 계산해서, 향후 계좌가 추가/변경돼도 항상
- * stocks + housing + cash = totalAssets가 유지되도록 한다.
- */
-export function getAssetHierarchy(snapshot: MonthlySnapshot): AssetHierarchy {
-  const isaStocks = snapshot.isaPortfolio.reduce((sum, h) => sum + h.amount, 0);
-  const brokerageStocks = (snapshot.brokeragePortfolio ?? []).reduce(
-    (sum, h) => sum + h.amount,
-    0,
-  );
-  const housing =
-    snapshot.accounts.find((a) => a.name === HOUSING_ACCOUNT_NAME)?.amount ?? 0;
-  const cash = snapshot.totalAssets - isaStocks - brokerageStocks - housing;
+export interface NamedAmount {
+  name: string;
+  amount: number;
+}
 
-  return {
-    stocks: { isa: isaStocks, brokerage: brokerageStocks },
-    housing,
-    cash,
-  };
+/**
+ * 안전자산 목록: ISA/위탁 보유 종목 중 안전자산 성격 + ISA·위탁계좌를 제외한
+ * 나머지 계좌 전부(청약/은행/저축예금 등, 전부 현금성) + ISA·위탁 예수금 합산.
+ */
+export function getSafeAssetItems(snapshot: MonthlySnapshot): NamedAmount[] {
+  const items: NamedAmount[] = [
+    ...snapshot.isaPortfolio
+      .filter((h) => h.type === "안전자산")
+      .map((h) => ({ name: h.name, amount: h.amount })),
+    ...(snapshot.brokeragePortfolio ?? [])
+      .filter((h) => h.type === "안전자산")
+      .map((h) => ({ name: h.name, amount: h.amount })),
+    ...snapshot.accounts
+      .filter((a) => a.name !== ISA_ACCOUNT_NAME && a.name !== BROKERAGE_ACCOUNT_NAME)
+      .map((a) => ({ name: a.name, amount: a.amount })),
+  ];
+
+  const cash = snapshot.isaCash + (snapshot.brokerageCash ?? 0);
+  if (cash > 0) {
+    items.push({ name: "ISA·위탁계좌 예수금", amount: cash });
+  }
+
+  return items.sort((a, b) => b.amount - a.amount);
+}
+
+/**
+ * 위험자산 목록: ISA+위탁계좌에서 실제 보유 중인 위험자산 성격 종목 전부를
+ * 이름 기준으로 통합(같은 종목을 여러 계좌에서 보유하면 합산)해서 보여준다.
+ */
+export function getRiskAssetItems(snapshot: MonthlySnapshot): NamedAmount[] {
+  const holdings = [
+    ...snapshot.isaPortfolio,
+    ...(snapshot.brokeragePortfolio ?? []),
+  ].filter((h) => h.type === "위험자산");
+
+  const merged = new Map<string, number>();
+  for (const h of holdings) {
+    merged.set(h.name, (merged.get(h.name) ?? 0) + h.amount);
+  }
+
+  return Array.from(merged.entries())
+    .map(([name, amount]) => ({ name, amount }))
+    .sort((a, b) => b.amount - a.amount);
 }
 
 /** 총자산 추이 (라인 차트용) */

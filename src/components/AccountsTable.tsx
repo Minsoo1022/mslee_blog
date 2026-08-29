@@ -1,5 +1,6 @@
 import type { AccountBalance } from "../types/assets";
 import { formatKRW } from "../lib/format";
+import { pickAccountIcon } from "./assetIcons";
 
 interface Props {
   accounts: AccountBalance[];
@@ -19,16 +20,22 @@ export default function AccountsTable({ accounts, total }: Props) {
           </tr>
         </thead>
         <tbody>
-          {accounts.map((acc) => (
-            <tr key={acc.name}>
-              <td className="cell-strong">{acc.name}</td>
-              <td className="cell-muted">{acc.note ?? "—"}</td>
-              <td style={{ textAlign: "right" }}>{formatKRW(acc.amount)}</td>
-              <td style={{ textAlign: "right" }}>
-                {total > 0 ? ((acc.amount / total) * 100).toFixed(1) : "0.0"}%
-              </td>
-            </tr>
-          ))}
+          {accounts.map((acc) => {
+            const Icon = pickAccountIcon(acc.name);
+            return (
+              <tr key={acc.name}>
+                <td className="cell-strong">
+                  {Icon && <Icon className="account-icon" />}
+                  {acc.name}
+                </td>
+                <td className="cell-muted">{acc.note ?? "—"}</td>
+                <td style={{ textAlign: "right" }}>{formatKRW(acc.amount)}</td>
+                <td style={{ textAlign: "right" }}>
+                  {total > 0 ? ((acc.amount / total) * 100).toFixed(1) : "0.0"}%
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
         <tfoot>
           <tr>
