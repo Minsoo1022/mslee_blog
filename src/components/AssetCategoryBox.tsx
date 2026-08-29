@@ -7,11 +7,17 @@ interface Props {
   icon: ComponentType<{ className?: string }>;
   items: NamedAmount[];
   accentColor: string;
+  /** 비중 계산 기준 — 전체 자산 총액 (카테고리 내부 비중이 아니라 전체자산 대비 비중을 보여줌) */
+  totalAssets: number;
 }
 
-export default function AssetCategoryBox({ title, icon: Icon, items, accentColor }: Props) {
-  const total = items.reduce((sum, item) => sum + item.amount, 0);
-
+export default function AssetCategoryBox({
+  title,
+  icon: Icon,
+  items,
+  accentColor,
+  totalAssets,
+}: Props) {
   return (
     <div className="asset-category-box">
       <div className="asset-category-box__header">
@@ -26,7 +32,7 @@ export default function AssetCategoryBox({ title, icon: Icon, items, accentColor
             <span className="asset-category-box__name">{item.name}</span>
             <span className="asset-category-box__amount">{formatKRW(item.amount)}</span>
             <span className="asset-category-box__pct">
-              {total > 0 ? ((item.amount / total) * 100).toFixed(1) : "0.0"}%
+              {totalAssets > 0 ? ((item.amount / totalAssets) * 100).toFixed(1) : "0.0"}%
             </span>
           </li>
         ))}

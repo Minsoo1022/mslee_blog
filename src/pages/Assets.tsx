@@ -81,12 +81,14 @@ export default function Assets() {
           icon={IconShieldCheck}
           items={safeItems}
           accentColor="#5C86A8"
+          totalAssets={latest.totalAssets}
         />
         <AssetCategoryBox
           title="위험자산"
           icon={IconTrendingUp}
           items={riskItems}
           accentColor="#B85C5C"
+          totalAssets={latest.totalAssets}
         />
       </div>
 
