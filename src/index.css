@@ -439,8 +439,8 @@ a {
   }
 }
 
-/* 전체자산 계층형(2단 도넛) 차트 범례 — recharts 기본 Legend 대신 직접 렌더 */
-.asset-hierarchy-chart__legend {
+/* 도넛 차트 범례 — recharts 기본 Legend 대신 직접 렌더 (라벨 겹침/클리핑 방지) */
+.risk-donut__legend {
   list-style: none;
   margin: 4px 0 0;
   padding: 0;
@@ -449,16 +449,16 @@ a {
   gap: 6px 16px;
   justify-content: center;
   font-size: 0.78rem;
-  color: var(--text-secondary);
+  color: var(--color-text-muted);
 }
 
-.asset-hierarchy-chart__legend li {
+.risk-donut__legend li {
   display: flex;
   align-items: center;
   gap: 6px;
 }
 
-.asset-hierarchy-chart__swatch {
+.risk-donut__swatch {
   width: 10px;
   height: 10px;
   border-radius: 2px;
